@@ -1,37 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-
-
 <!DOCTYPE generatorConfiguration
         PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
- <!--  <properties resource="config.properties"/> -->
+	<!-- <properties resource="config.properties"/> -->
+	<context id="Mysql" targetRuntime="MyBatis3Simple"
+		defaultModelType="flat">
+		<property name="beginningDelimiter" value="`" />
+		<property name="endingDelimiter" value="`" />
 
-  <context id="Mysql" targetRuntime="MyBatis3Simple" defaultModelType="flat">
-    <property name="beginningDelimiter" value="`"/>
-    <property name="endingDelimiter" value="`"/>
-    
-    <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
-      <property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>
-    </plugin>
+		<plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+			<property name="mappers" value="tk.mybatis.mapper.common.Mapper" />
+		</plugin>
 
-    <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                    connectionURL="jdbc:mysql://127.0.0.1:3306/test"
-                    userId="root"
-                    password="493229916">
-    </jdbcConnection>
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://127.0.0.1:3306/cqyq?tinyInt1isBit=false"
+			userId="root" password="493229916">
+		</jdbcConnection>
+		
+		<!-- 自定义jdbc和java类型转换 -->
+		<javaTypeResolver type="com.expand.JavaTypeResolverDefaultImpl">
+		</javaTypeResolver> 
+		
+		<javaModelGenerator targetPackage="cmcc.mobile.yiqi.entity"
+			targetProject="src/main/java" />
 
-    <javaModelGenerator targetPackage="com.model" targetProject="src/main/java"/>
+		<sqlMapGenerator targetPackage="sqlMap" targetProject="src/main/resources" />
+		<javaClientGenerator targetPackage="cmcc.mobile.yiqi.entity.dao"
+			targetProject="src/main/java" type="XMLMAPPER" />
 
-    <sqlMapGenerator targetPackage="mapper"  targetProject="src/main/resources"/>
 
-    <javaClientGenerator targetPackage="com.mapper" targetProject="src/main/java" type="XMLMAPPER" />
+		<table tableName="t_app_check">
+			<property name="useActualColumnNames" value="true" />
+			<generatedKey column="id" sqlStatement="Mysql" identity="true" />
 
-    <table tableName="%" >
-       <property name="useActualColumnNames" value="true" /> 
-      <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
-    </table>
-  </context>
+		</table>
+	</context>
 </generatorConfiguration>
